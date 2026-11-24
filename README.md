@@ -2,6 +2,10 @@
 
 AI Automation Avanzado · CoderHouse · Comisión 97500
 
+> **Entregas en este repositorio**
+> - Pre-Entrega 1 (Módulo 1): este README y `checkpoint1_estanislao_ortiz.json`, en la raíz.
+> - Pre-Entrega 4 (Módulo 4, integraciones CRM + correo + Slack): carpeta [`pre-entrega-4/`](pre-entrega-4/).
+
 Agente de n8n que responde consultas del personal de un estudio jurídico sobre los expedientes registrados en su índice. Es la primera versión del proyecto integrador: en los próximos módulos suma multi-agente, memoria, integraciones, RAG y voz.
 
 **Todos los datos son ficticios.** Ningún expediente, carátula ni persona es real.
