@@ -30,10 +30,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        768,
-        240
+        1152,
+        -176
       ],
-      "id": "916a6e10-2a24-4092-8aff-50e782b910d2",
+      "id": "6abfaa2e-6adc-4bf6-9f14-2f996fcd7708",
       "name": "Limpieza"
     },
     {
@@ -43,13 +43,13 @@
             {
               "id": "77002fe7-5535-49fb-a73f-75ccb1bfa027",
               "name": "chatInput",
-              "value": "={{ ('Asunto: ' + ($('Limpieza').first().json.Subject ?? '') + '\\n\\n' + ($('Limpieza').first().json.BodyText ?? '')).trim() }}",
+              "value": "={{ ('Asunto: ' + ($('Recibir mail').first().json.Subject ?? '') + '\\n\\n' + ($('Recibir mail').first().json.BodyText ?? '')).trim() }}",
               "type": "string"
             },
             {
               "id": "42bf39b4-32a3-4e20-85cd-aba961d4a5f0",
               "name": "sessionId",
-              "value": "={{ String($('Limpieza').first().json.From ?? '').trim().toLowerCase() }}",
+              "value": "={{ String($('Recibir mail').first().json.From ?? '').trim().toLowerCase() }}",
               "type": "string"
             }
           ]
@@ -59,10 +59,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        1408,
-        224
+        1312,
+        160
       ],
-      "id": "bc0be415-3a1d-4d0e-8249-12c90dfc2e3b",
+      "id": "3d7c7550-8c17-409b-a099-a7826b644ce7",
       "name": "Entrada"
     },
     {
@@ -70,10 +70,10 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3808,
-        304
+        3728,
+        240
       ],
-      "id": "b579e641-a062-4c8f-8e38-6e7841e06e15",
+      "id": "6f8b8fb7-1edc-4f28-aaea-8b53532e0401",
       "name": "Respuesta lista"
     },
     {
@@ -89,10 +89,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3808,
-        -16
+        3728,
+        -80
       ],
-      "id": "38aa1305-8d58-4e35-b778-9ce217b343b8",
+      "id": "ec3838a1-231f-4e58-8705-3f527b9685ea",
       "name": "Log de observabilidad",
       "webhookId": "86598197-bc6d-4ae8-a442-f3b9b28b9455",
       "credentials": {
@@ -119,10 +119,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.9,
       "position": [
-        2208,
-        224
+        2128,
+        160
       ],
-      "id": "c4faf91a-60c0-49ab-8822-fd128a3f6045",
+      "id": "842cb9dd-fd6c-4160-983b-e4201b6101fe",
       "name": "Router"
     },
     {
@@ -141,10 +141,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        2208,
-        432
+        2128,
+        368
       ],
-      "id": "f9ab3938-0df6-4683-a2ed-3b59ae5862cf",
+      "id": "cbb6324f-e082-4b17-aa49-e48002d2d50f",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -161,10 +161,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2352,
-        368
+        2272,
+        304
       ],
-      "id": "01500116-7d45-446f-8e28-38fab3db5cf4",
+      "id": "c4e61a13-5da1-42fb-9e68-259f43eec813",
       "name": "Structured Output Parser"
     },
     {
@@ -306,10 +306,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.5,
       "position": [
-        2480,
-        160
+        2400,
+        96
       ],
-      "id": "ae4bcc36-701d-4f27-8c1c-625058ec621c",
+      "id": "9ed95cd2-03ac-4d4a-91f9-a3baa54c4625",
       "name": "Enrutamiento"
     },
     {
@@ -341,10 +341,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2736,
-        48
+        2656,
+        -16
       ],
-      "id": "01c8887f-86ca-4acb-a7e4-49024f31aa2a",
+      "id": "75ca36ea-7e60-4012-8522-38fff9a0402d",
       "name": "Respuesta - Escalar"
     },
     {
@@ -376,10 +376,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2736,
-        208
+        2656,
+        144
       ],
-      "id": "64c31d02-ab42-4733-9959-82b42fae8297",
+      "id": "72cfb736-d972-4cb9-9cc7-b534bccb2c6f",
       "name": "Respuesta - Fuera de ámbito"
     },
     {
@@ -411,10 +411,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2736,
-        384
+        2656,
+        320
       ],
-      "id": "9769e8da-542e-499f-b69c-4479889efd1c",
+      "id": "f9a4443e-98d2-4ee6-ba76-087d59900631",
       "name": "Respuesta - Dudoso"
     },
     {
@@ -430,10 +430,10 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3808,
-        144
+        3728,
+        80
       ],
-      "id": "74f0b5bb-63ce-4a73-8bbb-5411f97473d3",
+      "id": "e29a697f-b5b0-4908-ba60-2b8f267371bb",
       "name": "Aviso al supervisor",
       "webhookId": "d94ed42d-a692-4f68-9bc5-5e4c70fe975c",
       "credentials": {
@@ -508,10 +508,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2928,
-        528
+        2848,
+        464
       ],
-      "id": "b5b2a69c-53ae-4e2d-adff-4aeee409ffb4",
+      "id": "de613f1c-63e9-40f3-8655-24e5731819d5",
       "name": "Contrato Worker 1"
     },
     {
@@ -639,10 +639,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.4,
       "position": [
-        3136,
-        528
+        3056,
+        464
       ],
-      "id": "0b730ca3-f3fd-45f5-8a04-62b04d876afa",
+      "id": "3cdfae8a-0f5c-42bb-b9cd-62e8b60f82ac",
       "name": "Llamar Worker 1"
     },
     {
@@ -716,10 +716,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2928,
-        720
+        2848,
+        656
       ],
-      "id": "4e026d72-be3e-4461-a698-dda7342bd02d",
+      "id": "1e94ed21-3f4f-4ba6-90cf-83216d766ad7",
       "name": "Contrato Worker 2"
     },
     {
@@ -816,10 +816,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.4,
       "position": [
-        3136,
-        720
+        3056,
+        656
       ],
-      "id": "e87557dd-e59d-40b6-bcb3-b7f7b264b3fd",
+      "id": "7739aeb3-bcbb-44a2-91d0-2524727037e3",
       "name": "Llamar Worker 2"
     },
     {
@@ -850,10 +850,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        3328,
-        624
+        3248,
+        560
       ],
-      "id": "09a2880f-5f84-408c-aec3-9c14c11cb08d",
+      "id": "b899f27b-f9d2-42f5-b27c-17d67bac3db7",
       "name": "¿Worker OK?"
     },
     {
@@ -885,10 +885,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        3536,
-        528
+        3456,
+        464
       ],
-      "id": "d35229e0-1a76-4e24-91ab-134375049e58",
+      "id": "4c170e88-a4dd-48b1-b671-b4d5be2f80ae",
       "name": "Respuesta - Worker"
     },
     {
@@ -920,10 +920,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        3536,
-        704
+        3456,
+        640
       ],
-      "id": "a632e89a-27c5-4712-b932-6a9564038c9d",
+      "id": "2b83279b-c066-4a7a-afa1-5e2a0f1d6b4b",
       "name": "Respuesta - Error de Worker"
     },
     {
@@ -949,10 +949,10 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.2,
       "position": [
-        1568,
-        224
+        1488,
+        160
       ],
-      "id": "1006b041-c012-4e7d-be36-bd58f42fd072",
+      "id": "c5deaedd-c86a-4f16-a1f7-1969131d37b8",
       "name": "Buscar memoria",
       "alwaysOutputData": true,
       "credentials": {
@@ -990,10 +990,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        1744,
-        224
+        1664,
+        160
       ],
-      "id": "03223a46-dc42-4b3d-bf63-f39341e1ca4b",
+      "id": "282500d0-9c37-4f61-905b-fe38886ffe4f",
       "name": "¿Sesión conocida?"
     },
     {
@@ -1111,10 +1111,10 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.2,
       "position": [
-        1904,
-        304
+        1824,
+        240
       ],
-      "id": "2f7f6812-9872-46f3-9a14-eba847311c23",
+      "id": "a516a8fa-6ee8-412a-9cd1-e93478af9052",
       "name": "Crear memoria",
       "credentials": {
         "airtableTokenApi": {
@@ -1170,10 +1170,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2048,
-        304
+        1968,
+        240
       ],
-      "id": "c0f7907e-70ab-4710-acaa-c4edea681d5e",
+      "id": "6e6933ae-1677-4633-9b30-e6ea28dc0f39",
       "name": "Memoria nueva"
     },
     {
@@ -1223,10 +1223,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        1968,
-        128
+        1904,
+        64
       ],
-      "id": "3942f448-331d-47c8-90d0-b58f7c83a7c0",
+      "id": "18874e97-9720-47e9-a9d3-6c2cbf7a05b8",
       "name": "Memoria recuperada"
     },
     {
@@ -1358,10 +1358,10 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.2,
       "position": [
-        3808,
-        496
+        3728,
+        432
       ],
-      "id": "2e23aa1b-4517-48f6-a7f6-4c9ea9845911",
+      "id": "5151320e-e4de-4ab6-8aca-94bf931abba4",
       "name": "Guardar turno",
       "credentials": {
         "airtableTokenApi": {
@@ -1389,10 +1389,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryManager",
       "typeVersion": 1.1,
       "position": [
-        3984,
-        496
+        3904,
+        432
       ],
-      "id": "1a65b4c2-bbec-48d8-9064-d3171fd023fb",
+      "id": "826f982f-ab20-4da8-b213-3ec3f7a00283",
       "name": "Guardar en memoria corta"
     },
     {
@@ -1404,10 +1404,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.4,
       "position": [
-        3984,
-        656
+        3904,
+        592
       ],
-      "id": "bd3ce8a7-55c7-44b7-b29f-3d5c4ed1a6e7",
+      "id": "033f18c4-043e-47e5-b1f4-4741de8a44a4",
       "name": "Simple Memory"
     },
     {
@@ -1437,10 +1437,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        4288,
-        496
+        4208,
+        432
       ],
-      "id": "a8c290af-d78e-499a-adc1-e4500506b64b",
+      "id": "e83527d4-5992-420a-9dea-c151d5f58cdd",
       "name": "¿Más de 5 mensajes?"
     },
     {
@@ -1450,10 +1450,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryManager",
       "typeVersion": 1.1,
       "position": [
-        4480,
-        528
+        4400,
+        464
       ],
-      "id": "4d79f92d-7b53-437b-8251-49ce9c6a1368",
+      "id": "4a856c36-3e51-41f5-b659-294455c8b5d4",
       "name": "Leer memoria corta"
     },
     {
@@ -1473,10 +1473,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.9,
       "position": [
-        4768,
-        528
+        4688,
+        464
       ],
-      "id": "a8b4c736-8b0b-4a9e-ac01-2158d3967fb7",
+      "id": "e87f0c99-88e4-4681-ad35-0128ba3f6434",
       "name": "Resumidor",
       "executeOnce": true
     },
@@ -1496,10 +1496,10 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        4768,
-        784
+        4688,
+        720
       ],
-      "id": "0f415e02-fa5a-4fe4-bf77-152cbed34f76",
+      "id": "eb6d1200-23dc-4247-bb57-a4bbba3d8a68",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
@@ -1517,10 +1517,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        4832,
-        672
+        4752,
+        608
       ],
-      "id": "ec61e3ed-67f2-4258-af82-a84cdfe6b417",
+      "id": "de7efee9-ba4d-43b7-a9e7-eaf5a5489893",
       "name": "Structured Output Parser1"
     },
     {
@@ -1650,10 +1650,10 @@
       "type": "n8n-nodes-base.airtable",
       "typeVersion": 2.2,
       "position": [
-        5056,
-        528
+        4976,
+        464
       ],
-      "id": "b77944a7-467e-419f-a9c9-010fbaf25608",
+      "id": "a26b78c6-b41f-44db-8565-428c70fcbbef",
       "name": "Guardar resumen",
       "credentials": {
         "airtableTokenApi": {
@@ -1670,10 +1670,10 @@
       "type": "@n8n/n8n-nodes-langchain.memoryManager",
       "typeVersion": 1.1,
       "position": [
-        5216,
-        528
+        5136,
+        464
       ],
-      "id": "2c40f1a8-4a60-4cf5-8134-daf1a5dbc8cc",
+      "id": "bf658313-ebcd-4179-a110-f451e3f50950",
       "name": "Vaciar memoria corta"
     },
     {
@@ -1681,7 +1681,9 @@
         "pollTimes": {
           "item": [
             {
-              "mode": "everyMinute"
+              "mode": "everyX",
+              "value": 30,
+              "unit": "minutes"
             }
           ]
         },
@@ -1697,10 +1699,10 @@
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.4,
       "position": [
-        432,
-        224
+        816,
+        -192
       ],
-      "id": "5e31c9ae-3d8f-4edb-8463-10659dd7e6d0",
+      "id": "f7a64e69-4492-49f1-8632-fd7934e1b369",
       "name": "Gmail Trigger",
       "credentials": {
         "gmailOAuth2": {
@@ -1792,10 +1794,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        592,
-        224
+        976,
+        -192
       ],
-      "id": "a6307d26-3ee2-4aaf-9a62-561da6854024",
+      "id": "38ecd441-fe7c-4294-8796-de6d2fde20d8",
       "name": "¿Auto-reply?"
     },
     {
@@ -1826,10 +1828,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        928,
-        240
+        1312,
+        -176
       ],
-      "id": "eddddf6f-d89b-4466-9be2-87a3dac83ac4",
+      "id": "162b258d-47e4-4d26-9946-d31e7b275666",
       "name": "¿Email válido?"
     },
     {
@@ -1856,10 +1858,10 @@
       "type": "n8n-nodes-base.hubspot",
       "typeVersion": 2.3,
       "position": [
-        1040,
-        80
+        976,
+        16
       ],
-      "id": "bd46d550-1ef0-47ce-8d61-932d65effcef",
+      "id": "b4cfbd73-b54b-4e4f-86e2-a2fe04b8f7f9",
       "name": "Buscar contacto",
       "alwaysOutputData": true,
       "credentials": {
@@ -1897,16 +1899,16 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.4,
       "position": [
-        1152,
-        240
+        1088,
+        176
       ],
-      "id": "fcfaf684-abc7-4096-a17a-937561cd8c65",
+      "id": "2a0c83f0-9dce-4e70-bcdc-28586ab8ab3d",
       "name": "¿Contacto existe?"
     },
     {
       "parameters": {
         "authentication": "oAuth2",
-        "email": "={{ $('Limpieza').first().json.From }}",
+        "email": "={{ $('Recibir mail').first().json.From }}",
         "additionalFields": {
           "leadStatus": "IN_PROGRESS"
         },
@@ -1915,10 +1917,10 @@
       "type": "n8n-nodes-base.hubspot",
       "typeVersion": 2.3,
       "position": [
-        1280,
-        80
+        1200,
+        16
       ],
-      "id": "fb0301b2-4e2b-4c25-b90a-3c61bbdf01b5",
+      "id": "26557de7-4e2d-4d30-af46-16f9241ee4c9",
       "name": "Actualizar contacto",
       "credentials": {
         "hubspotOAuth2Api": {
@@ -1930,7 +1932,7 @@
     {
       "parameters": {
         "authentication": "oAuth2",
-        "email": "={{ $('Limpieza').first().json.From }}",
+        "email": "={{ $('Recibir mail').first().json.From }}",
         "additionalFields": {
           "leadStatus": "NEW",
           "lifeCycleStage": "lead"
@@ -1940,10 +1942,10 @@
       "type": "n8n-nodes-base.hubspot",
       "typeVersion": 2.3,
       "position": [
-        1280,
-        384
+        1200,
+        304
       ],
-      "id": "95567cd1-f682-4529-ac7a-57a40e52bd86",
+      "id": "2dc87ec6-9c81-460f-a3a4-c61239e6428a",
       "name": "Crear contacto",
       "credentials": {
         "hubspotOAuth2Api": {
@@ -1955,20 +1957,20 @@
     {
       "parameters": {
         "resource": "draft",
-        "subject": "={{ 'Re: ' + $('Limpieza').first().json.Subject }}",
+        "subject": "={{ 'Re: ' + $('Recibir mail').first().json.Subject }}",
         "message": "={{ (() => { const n = $('Router').first().json.output.nombre_usuario; const r = String($json.respuesta ?? '').replace(/\\\\n/g, '\\n').replace(/\\*\\*/g, '').replace(/^\\s*-\\s+/gm, '• ').trim(); return 'Buenos días' + (n ? ', ' + n : '') + ':\\n\\n' + r + '\\n\\nSaludos cordiales,\\nAsistente de Expedientes\\n(Respuesta preparada automáticamente y revisada por el estudio antes de enviarse.)'; })() }}",
         "options": {
-          "threadId": "={{ $('Gmail Trigger').first().json.threadId }}",
-          "sendTo": "={{ $('Limpieza').first().json.From }}"
+          "threadId": "={{ $('Recibir mail').first().json.threadId }}",
+          "sendTo": "={{ $('Recibir mail').first().json.From }}"
         }
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        4048,
-        304
+        3968,
+        240
       ],
-      "id": "0048a4a3-f074-43f7-9701-691a83e3117a",
+      "id": "10982e38-1cf2-478e-89a9-8cfc02406741",
       "name": "Crear borrador",
       "webhookId": "29638b3d-2d02-46e0-9aa9-f9d56e67713f",
       "credentials": {
@@ -1985,13 +1987,13 @@
             {
               "id": "c9b9df87-f288-4901-8218-4365e0eab103",
               "name": "remitente",
-              "value": "={{ $('Limpieza').first().json.From }}",
+              "value": "={{ $('Recibir mail').first().json.From }}",
               "type": "string"
             },
             {
               "id": "824fc477-acd4-46b2-9822-596d68ca84be",
               "name": "asunto",
-              "value": "={{ $('Limpieza').first().json.Subject }}",
+              "value": "={{ $('Recibir mail').first().json.Subject }}",
               "type": "string"
             },
             {
@@ -2025,10 +2027,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        4048,
-        144
+        3968,
+        80
       ],
-      "id": "7661c40b-de57-412a-94f5-ebd455e42f93",
+      "id": "a98cf5e3-ccf0-4d9a-9feb-a6418a31e482",
       "name": "Payload Slack"
     },
     {
@@ -2049,10 +2051,10 @@
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.7,
       "position": [
-        4224,
-        144
+        4144,
+        80
       ],
-      "id": "d26b0c70-4d84-4a3a-8a71-4f37a7bc5e12",
+      "id": "65db6de0-6afb-41ff-9e57-698728b55167",
       "name": "Aviso a Slack",
       "webhookId": "6ed21b31-0141-4274-a15b-de4d1b6c7d97",
       "credentials": {
@@ -2061,6 +2063,111 @@
           "name": "Slack Lex"
         }
       }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "From"
+            },
+            {
+              "name": "Subject"
+            },
+            {
+              "name": "BodyText"
+            },
+            {
+              "name": "threadId"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        816,
+        16
+      ],
+      "id": "13572bcd-8511-446f-8b11-838317af8b1b",
+      "name": "Recibir mail"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "JNzewutg4QVVnoRq",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/JNzewutg4QVVnoRq",
+          "cachedResultName": "Manager Email (M4)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "From": "={{ $json.From }}",
+            "Subject": "={{ $json.Subject }}",
+            "BodyText": "={{ $json.BodyText }}",
+            "threadId": "={{ $('Gmail Trigger').item.json.threadId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "From",
+              "displayName": "From",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "Subject",
+              "displayName": "Subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "BodyText",
+              "displayName": "BodyText",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "threadId",
+              "displayName": "threadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.4,
+      "position": [
+        1520,
+        -192
+      ],
+      "id": "7558d005-cd9a-4378-98cf-a4a81ce17060",
+      "name": "Procesar cada mail"
     }
   ],
   "pinData": {},
@@ -2551,12 +2658,11 @@
       "main": [
         [
           {
-            "node": "Buscar contacto",
+            "node": "Procesar cada mail",
             "type": "main",
             "index": 0
           }
-        ],
-        []
+        ]
       ]
     },
     "Buscar contacto": {
@@ -2636,6 +2742,17 @@
           }
         ]
       ]
+    },
+    "Recibir mail": {
+      "main": [
+        [
+          {
+            "node": "Buscar contacto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -2643,7 +2760,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "35d3a863-0dc2-4900-93a1-a06430ffff6a",
+  "versionId": "a0208a60-1c00-40ab-b2a8-b4a26731f4c3",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "d9dbd7d1b4e2289b46823d229fb40b9e77c63362d70d5277e90396e347d811d8"

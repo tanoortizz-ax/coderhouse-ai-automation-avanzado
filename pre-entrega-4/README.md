@@ -23,24 +23,39 @@ Integraciones del sistema multi-agente con un **CRM** (HubSpot), una **casilla d
 ## Arquitectura
 
 ```
-Gmail Trigger ─► ① ¿Auto-reply? ──true──► (fin: no se responde a robots)
-                        │false
-                        ▼
-                 ④ Limpieza ─► ¿Email válido? ──false──► (fin)
-                                      │true
-                                      ▼
-                 ② Buscar contacto ─► ¿Contacto existe? ─true─► Actualizar contacto ─┐
-                    (HubSpot Search)          └──────false────► Crear contacto ──────┤
-                                                                                     ▼
+Gmail Trigger (cada 30 min) ─► ① ¿Auto-reply? ──true──► (fin: no se responde a robots)
+                                       │false
+                                       ▼
+                                ④ Limpieza ─► ¿Email válido? ──false──► (fin)
+                                                     │true
+                                                     ▼
+                                         Procesar cada mail ── una ejecución nueva por mail ──┐
+                                                                                              │
+ ┌────────────────────────────────────────────────────────────────────────────────────────────┘
+ ▼
+Recibir mail ─► ② Buscar contacto ─► ¿Contacto existe? ─true─► Actualizar contacto ─┐
+                   (HubSpot Search)          └──────false────► Crear contacto ──────┤
+                                                                                    ▼
    Entrada ─► Memoria (Airtable) ─► Router (gpt-4o-mini) ─► Workers 1/2 o respuesta fija
-                                                                       │
-                                                                       ▼
-                                                               Respuesta lista
-                                                        ┌──────────────┴──────────────┐
-                                                        ▼                             ▼
-                                         ③ Crear borrador (Gmail Draft)    Payload Slack ─► Aviso a Slack
-       (en paralelo, como en M3: Log de observabilidad, Aviso al supervisor, Guardar turno y resumen de memoria)
+                                                                      │
+                                                                      ▼
+                                                              Respuesta lista
+                                                       ┌──────────────┴──────────────┐
+                                                       ▼                             ▼
+                                        ③ Crear borrador (Gmail Draft)    Payload Slack ─► Aviso a Slack
+      (en paralelo, como en M3: Log de observabilidad, Aviso al supervisor, Guardar turno y resumen de memoria)
 ```
+
+## Frecuencia de revisión y varios mails a la vez
+
+El **Gmail Trigger revisa la casilla cada 30 minutos**, en lugar de cada minuto, para reducir llamadas y consumo. Para un estudio alcanza: la respuesta es un borrador que igual revisa una persona.
+
+Con una revisión cada 30 minutos, el trigger entrega **todos los mails nuevos juntos**, en una sola ejecución. El pipeline de M3 trabaja con un mail por vez (usa `.first()` después de Airtable), así que procesarlos juntos mezclaría los datos de unos con otros. Por eso, después de los controles de entrada:
+
+- **Procesar cada mail** (Execute Workflow, *Run once for each item*, espera a que cada uno termine) vuelve a llamar a este mismo workflow una vez por mail, con `From`, `Subject`, `BodyText` y el `threadId` del hilo.
+- **Recibir mail** (*When Executed by Another Workflow*) es la entrada de cada una de esas ejecuciones. Desde ahí sigue el pipeline completo con un solo mail.
+
+Cada mail queda como **una ejecución propia** en *Executions*, igual que en el Log de trazabilidad.
 
 ## Los 4 nodos de control
 
@@ -60,7 +75,7 @@ Gmail Trigger ─► ① ¿Auto-reply? ──true──► (fin: no se responde 
 | Parte del workflow del Módulo 3 | Mismo pipeline de M3: memoria por sesión en Airtable, Router con salida estructurada, Workers como sub-workflows, Log y Aviso al supervisor. Ahora `Session_ID` = **email del remitente**, así que la memoria es por persona |
 | Set antes de Slack | **Payload Slack** deja 6 campos (remitente, asunto, contacto nuevo/existente, ruta, estado y un extracto de 300 caracteres) |
 | Lectura y escritura | Gmail: lee (Trigger) y escribe (Draft). HubSpot: lee (Search) y escribe (Create or Update). Slack: escribe |
-| Test de regresión | 6 pruebas con la respuesta esperada escrita antes de correrlas (ver abajo) |
+| Test de regresión | 7 pruebas con la respuesta esperada escrita antes de correrlas (ver abajo) |
 
 ## Mínimo privilegio (scopes)
 
@@ -89,6 +104,7 @@ En producción, el siguiente paso sería una app OAuth propia por servicio, con 
 | P4 | Remitente nuevo | ✅ tras corregir una conexión: Crear contacto, y el Router lo deriva a Vencimientos |
 | P5 | Punta a punta: borrador + Slack | ✅ borrador en el mismo hilo, saludo con el nombre, sin Markdown; aviso en Slack |
 | P6 | Consulta de estrategia jurídica → Escalar | ✅ sin Worker; borrador de derivación; Aviso al supervisor y Log archivados en sus etiquetas |
+| P7 | 3 mails en un mismo poll (datos simulados): consulta, vencimientos y un `mailer-daemon` | ✅ el rebote se frena; 2 sub-ejecuciones, 2 borradores y 2 avisos de Slack, cada uno con sus propios datos |
 
 Durante las pruebas apareció un riesgo de bucle que la consigna no mencionaba: un Log del propio sistema llegó a la casilla y se procesó como consulta. Se resolvió con la 7.ª condición del IF (asunto contiene `[Asistente de Expedientes]`).
 
@@ -96,9 +112,9 @@ Durante las pruebas apareció un riesgo de bucle que la consigna no mencionaba: 
 
 1. Importar el `.json` en n8n (**Create Workflow → ⋯ → Import from File**).
 2. Crear y elegir las credenciales propias: Gmail, HubSpot y Slack (OAuth2), OpenAI y Airtable.
-3. Elegir los Workers de la Pre-Entrega 3 en *Llamar Worker 1* y *Llamar Worker 2*, y la base de Airtable de memoria en los nodos de Airtable.
+3. Elegir los Workers de la Pre-Entrega 3 en *Llamar Worker 1* y *Llamar Worker 2*, **este mismo workflow** en *Procesar cada mail*, y la base de Airtable de memoria en los nodos de Airtable.
 4. Elegir el canal en *Aviso a Slack* y poner correos propios en *Log de observabilidad* y *Aviso al supervisor*.
-5. Mandar un mail a la casilla conectada, por ejemplo `¿En qué estado está el expediente de Gutiérrez?`, y ejecutar el workflow. El resultado es un borrador en *Borradores*, el contacto en HubSpot y el aviso en Slack.
+5. Mandar un mail a la casilla conectada, por ejemplo `¿En qué estado está el expediente de Gutiérrez?`, y ejecutar el workflow desde el *Gmail Trigger* (también se pueden fijar datos de prueba en ese nodo con *pin data*). El resultado es un borrador en *Borradores*, el contacto en HubSpot y el aviso en Slack.
 
 ## Entregas anteriores
 
